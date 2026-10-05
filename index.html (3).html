@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proveedores Verificados - Streaming & Servicios Digitales</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            stream: {
+              bg: '#080512',
+              card: '#100B22',
+              cardLight: '#181232',
+              border: '#281B4E',
+              purple: '#8B5CF6',
+              purpleDark: '#6D28D9',
+              gold: '#F59E0B',
+              goldLight: '#FDE68A',
+              emerald: '#10B981',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #080512;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.10) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(109, 40, 217, 0.20) 0px, transparent 60%);
+      background-attachment: fixed;
+    }
+    
+    .gold-glow {
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.35), inset 0 0 15px rgba(245, 158, 11, 0.15);
+    }
+    .emerald-glow {
+      box-shadow: 0 0 35px rgba(16, 185, 129, 0.3), inset 0 0 15px rgba(16, 185, 129, 0.1);
+    }
+    .purple-glow {
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.25);
+    }
+
+    .shimmer-gold {
+      background: linear-gradient(90deg, #F59E0B 0%, #FEF08A 50%, #F59E0B 100%);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      animation: shine 3s linear infinite;
+    }
+
+    @keyframes shine {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: #3B2A68;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="text-slate-200 antialiased min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white">
+
+  <!-- Header / Navigation -->
+  <header class="w-full bg-[#0D0820]/90 backdrop-blur-md border-b border-purple-900/40 sticky top-0 z-30 shadow-2xl">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      <!-- Logo & Brand Name -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="resetSearch()">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-purple-700 via-indigo-600 to-pink-600 flex items-center justify-center shadow-lg shadow-purple-600/30 text-white border border-purple-400/30">
+          <!-- Streaming Play Shield Icon -->
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M12 3c-4.97 0-9 1.79-9 4v5.5c0 5.25 3.75 10.15 9 11.5 5.25-1.35 9-6.25 9-11.5V7c0-2.21-4.03-4-9-4z" />
+          </svg>
+        </div>
+        <div>
+          <span class="block text-xl font-black tracking-tight text-white uppercase sm:text-2xl font-display">
+            PROVEEDORES <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-amber-300 bg-clip-text text-transparent">VERIFICADOS</span>
+          </span>
+          <span class="block text-[10px] sm:text-xs font-semibold text-purple-300/80 tracking-widest flex items-center gap-1.5 uppercase">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            PORTAL OFICIAL DE SEGURIDAD STREAMING
+          </span>
+        </div>
+      </div>
+
+      <!-- Action: Admin Panel Access -->
+      <button onclick="openAdminModal()" class="flex items-center space-x-2 bg-purple-950/60 hover:bg-purple-900/80 text-purple-200 text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl border border-purple-700/50 hover:border-purple-400 transition-all duration-200 shadow-md">
+        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+        <span class="hidden sm:inline">Panel Administrador</span>
+        <span class="sm:hidden">Admin</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="flex-grow flex flex-col items-center justify-start px-4 sm:px-6 py-8 sm:py-12 max-w-4xl mx-auto w-full">
+    
+    <!-- Hero / Headline Section -->
+    <div class="text-center max-w-2xl mx-auto mb-8">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-950/80 text-purple-300 text-xs font-bold uppercase tracking-wider mb-4 border border-purple-500/40 purple-glow">
+        <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
+        Red Oficial contra Fraudes en Cuentas y Pantallas
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight font-display">
+        PROVEEDORES VERIFICADOS
+      </h1>
+      <p class="mt-3 text-purple-200/80 text-base sm:text-lg">
+        Consulta el número de WhatsApp del vendedor antes de pagar. Detecta al instante si es un <strong class="text-emerald-400">Proveedor Verificado</strong> o un exclusivo <strong class="text-amber-400">Verificado Premium</strong>.
+      </p>
+    </div>
+
+    <!-- Verification Search Box Container (Dark Purple Glass) -->
+    <div class="w-full bg-[#120B26]/90 backdrop-blur-xl rounded-2xl shadow-2xl shadow-purple-950/80 border border-purple-700/40 p-5 sm:p-7">
+      <form id="verifyForm" onsubmit="handleVerify(event)" class="w-full">
+        <label for="whatsappInput" class="block text-xs sm:text-sm font-bold uppercase text-purple-200 tracking-wider mb-2 flex items-center gap-2">
+          <span>Ingresa el Número de WhatsApp del Vendedor</span>
+        </label>
+        
+        <div class="relative flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-grow">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-purple-400">
+              <!-- WhatsApp SVG Icon -->
+              <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.976.58 1.96.924 3.149.924l.005.001c3.179 0 5.766-2.587 5.767-5.767.002-3.18-2.584-5.766-5.772-5.766zm6.398 10.395c-.378.945-1.872 1.777-2.583 1.839-.672.059-1.503.084-4.385-1.111-3.69-1.53-6.075-5.275-6.26-5.519-.184-.244-1.498-1.993-1.498-3.803 0-1.81.947-2.701 1.284-3.069.337-.367.734-.459.979-.459.245 0 .49 0 .704.01.229.01.535-.087.838.642.316.76 1.082 2.64 1.174 2.829.092.189.153.411.03.655-.122.245-.184.398-.367.612-.183.214-.386.478-.551.642-.184.184-.377.388-.162.756.214.367.954 1.572 2.046 2.544 1.405 1.252 2.59 1.639 2.957 1.823.367.184.582.153.796-.092.214-.245.918-1.07 1.163-1.438.245-.367.49-.306.826-.184.337.122 2.142 1.01 2.509 1.194.367.184.612.275.704.428.092.153.092.887-.286 1.832z"/>
+              </svg>
+            </div>
+            <input 
+              type="tel" 
+              id="whatsappInput" 
+              placeholder="Ej: +51 987 654 321 o 987654321" 
+              required
+              class="w-full pl-12 pr-4 py-3.5 bg-[#090516] border-2 border-purple-800/60 rounded-xl text-white text-base font-semibold focus:outline-none focus:border-purple-400 focus:bg-[#0E0824] transition-all shadow-inner placeholder:text-purple-300/40"
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            id="verifyBtn" 
+            class="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 hover:from-purple-500 hover:to-indigo-500 active:scale-95 text-white font-extrabold px-8 py-3.5 rounded-xl shadow-lg shadow-purple-600/40 flex items-center justify-center gap-2 transition-all duration-150 text-base whitespace-nowrap border border-purple-400/40"
+          >
+            <svg class="w-5 h-5 text-purple-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <span>Verificar</span>
+          </button>
+        </div>
+      </form>
+      
+      <!-- Quick testing pills -->
+      <div class="mt-4 flex flex-wrap items-center justify-between text-xs text-purple-300/70 pt-2 border-t border-purple-900/40 gap-2">
+        <span>💡 Busca con o sin prefijo internacional (+51, +52, +57, etc.)</span>
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="loadSampleNormalQuery()" class="text-emerald-400 hover:text-emerald-300 font-semibold underline flex items-center gap-1">
+            🟢 Probar Verificado
+          </button>
+          <span class="text-purple-700">|</span>
+          <button type="button" onclick="loadSamplePremiumQuery()" class="text-amber-400 hover:text-amber-300 font-extrabold underline flex items-center gap-1">
+            👑 Probar Premium
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT CONTAINER -->
+    <div id="resultsWrapper" class="w-full mt-8">
+
+      <!-- 1. State: VERIFIED SUPPLIER FOUND (Dynamically toggles Green Standard vs Gold Premium) -->
+      <div id="verifiedCard" class="hidden w-full rounded-2xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300">
+        <!-- Top Accent Bar (Filled via JS) -->
+        <div id="resultTopBar" class="absolute top-0 left-0 right-0 h-2"></div>
+
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+          <!-- Supplier Logo -->
+          <div class="relative flex-shrink-0">
+            <div id="resultLogoContainer" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl p-1 shadow-md flex items-center justify-center overflow-hidden">
+              <img 
+                id="resultLogo" 
+                src="" 
+                alt="Logo del Proveedor" 
+                class="w-full h-full object-contain"
+                onerror="this.src='https://placehold.co/200x200/1e1236/ffffff?text=STREAM'"
+              />
+            </div>
+            <!-- Check or Crown Icon badge overlay -->
+            <div id="resultCheckBadge" class="absolute -bottom-2 -right-2 p-1.5 rounded-full shadow-md">
+              <!-- SVG icon swapped dynamically -->
+            </div>
+          </div>
+
+          <!-- Supplier Data & Details -->
+          <div class="flex-grow text-center md:text-left space-y-3">
+            
+            <!-- Dynamic Main Badge -->
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
+              <span id="resultStatusBadge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black tracking-wider uppercase shadow-md">
+                <svg id="resultStatusIcon" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                  <!-- Injected via JS -->
+                </svg>
+                <span id="resultStatusText">PROVEEDOR VERIFICADO</span>
+              </span>
+              <span id="resultSubBadge" class="text-xs font-semibold">Registro Oficial Activo</span>
+            </div>
+
+            <!-- Company Name -->
+            <div>
+              <p class="text-[11px] uppercase font-bold text-purple-300/70 tracking-widest">Nombre de la Empresa / Distribuidor</p>
+              <h3 id="resultCompanyName" class="text-2xl sm:text-4xl font-black leading-tight tracking-wide font-display mt-0.5">
+                -
+              </h3>
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+              <p class="text-[11px] uppercase font-bold text-purple-300/70 tracking-widest">Número de WhatsApp Certificado</p>
+              <p id="resultPhone" class="text-lg sm:text-xl font-bold tracking-wider flex items-center justify-center md:justify-start gap-2 font-mono mt-0.5">
+                -
+              </p>
+            </div>
+
+            <!-- Notes or Description -->
+            <div id="resultNotesWrapper" class="pt-1 hidden">
+              <p id="resultNotesBox" class="text-xs p-3 rounded-xl border">
+                <span class="font-bold">Detalles / Servicios autorizados:</span> <span id="resultNotes">-</span>
+              </p>
+            </div>
+
+            <!-- Verified Join Date Badge -->
+            <div id="resultJoinDateWrapper" class="pt-1 flex items-center justify-center md:justify-start">
+              <div id="resultJoinDateBadge" class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <span>Fecha de Ingreso: <strong id="resultJoinDate" class="font-bold font-mono">-</strong></span>
+              </div>
+            </div>
+
+            <!-- Direct Contact Button via WhatsApp -->
+            <div class="pt-3 flex flex-col sm:flex-row items-center gap-3">
+              <a 
+                id="resultWhatsAppDirect" 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-black px-7 py-3.5 rounded-xl shadow-xl transition-all text-sm uppercase tracking-wider"
+              >
+                <!-- WA Icon -->
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+                </svg>
+                <span>Chatear en WhatsApp Oficial</span>
+              </a>
+
+              <span id="resultSecurityBadge" class="text-xs px-3.5 py-2.5 rounded-xl border font-bold flex items-center gap-1.5">
+                🔒 Número certificado contra fraudes
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. State: NOT FOUND / WARNING (Dark Ruby Streaming Alert) -->
+      <div id="notFoundCard" class="hidden w-full bg-[#180A14] border-2 border-red-500/70 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden transition-all duration-300">
+        <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-red-600 via-rose-500 to-red-600"></div>
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+          <div class="w-16 h-16 rounded-2xl bg-red-950/80 border border-red-500/60 flex items-center justify-center text-red-400 flex-shrink-0 shadow-lg">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+          </div>
+          <div class="space-y-2 text-center sm:text-left flex-grow">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-red-950 text-red-300 border border-red-500/50">
+              Alerta de Seguridad
+            </span>
+            <h3 class="text-2xl font-black text-white font-display">
+              Proveedor no encontrado
+            </h3>
+            <p class="text-sm text-purple-200/80 leading-relaxed">
+              El número <span id="searchedQueryNum" class="font-mono font-bold text-white bg-purple-950 px-2 py-0.5 rounded border border-purple-800"></span> <strong class="text-red-400">NO</strong> figura registrado en nuestra base de datos de confianza de streaming.
+            </p>
+            <div class="bg-red-950/40 border border-red-500/30 rounded-xl p-3.5 text-xs text-red-200 mt-2">
+              ⚠️ <strong>Advertencia:</strong> Evita realizar transferencias bancarias o pagos por adelantado a números desconocidos o no verificados. No compres a cuentas que no ofrezcan respaldo verificado.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. State: INITIAL / IDLE STATE BANNER -->
+      <div id="initialGuideCard" class="w-full bg-[#120B26]/60 border border-dashed border-purple-800/50 rounded-2xl p-8 text-center text-purple-300/70">
+        <svg class="w-12 h-12 mx-auto text-purple-400/60 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="text-base font-bold text-white font-display">Listo para consultar</p>
+        <p class="text-xs text-purple-300/60 mt-1 max-w-md mx-auto">
+          Escribe el número del vendedor en el buscador para comprobar si posee credenciales activas de <span class="text-emerald-400 font-semibold">Proveedor Verificado</span> o sello <span class="text-amber-400 font-semibold">Premium</span>.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Security Badges Footer Strip -->
+    <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+      <div class="bg-[#110A24] border border-purple-900/50 p-4 rounded-xl flex items-center gap-3 shadow-md">
+        <div class="w-10 h-10 rounded-lg bg-purple-950 text-purple-400 flex items-center justify-center flex-shrink-0 border border-purple-800/60">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <div>
+          <h4 class="text-xs font-black text-white uppercase tracking-wider font-display">Garantía Streaming</h4>
+          <p class="text-[11px] text-purple-300/70">Proveedores con historial comprobado.</p>
+        </div>
+      </div>
+
+      <div class="bg-[#110A24] border border-purple-900/50 p-4 rounded-xl flex items-center gap-3 shadow-md">
+        <div class="w-10 h-10 rounded-lg bg-amber-950/60 text-amber-400 flex items-center justify-center flex-shrink-0 border border-amber-600/40">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <div>
+          <h4 class="text-xs font-black text-amber-300 uppercase tracking-wider font-display">Nivel Premium</h4>
+          <p class="text-[11px] text-amber-200/60">Distribuidores mayoristas autorizados.</p>
+        </div>
+      </div>
+
+      <div class="bg-[#110A24] border border-purple-900/50 p-4 rounded-xl flex items-center gap-3 shadow-md">
+        <div class="w-10 h-10 rounded-lg bg-emerald-950/60 text-emerald-400 flex items-center justify-center flex-shrink-0 border border-emerald-600/40">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <div>
+          <h4 class="text-xs font-black text-emerald-300 uppercase tracking-wider font-display">Anti-Estafas</h4>
+          <p class="text-[11px] text-emerald-200/60">Protección contra suplantación y clonación.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Admin Modal Background & Windows -->
+  <div id="adminModal" class="fixed inset-0 bg-[#06030E]/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    
+    <!-- 1. Password Protection Screen -->
+    <div id="adminPasswordScreen" class="bg-[#110A24] rounded-2xl w-full max-w-md p-6 sm:p-8 shadow-2xl border border-purple-700/50">
+      <div class="flex items-center justify-between pb-4 border-b border-purple-900/60">
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-lg bg-purple-900/80 text-purple-300 flex items-center justify-center border border-purple-500/40">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <h2 class="text-lg font-black text-white font-display">Acceso Administrativo</h2>
+        </div>
+        <button onclick="closeAdminModal()" class="text-purple-400 hover:text-white">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form onsubmit="handleAdminLogin(event)" class="mt-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-purple-300 uppercase mb-1">Contraseña de Administrador</label>
+          <input 
+            type="password" 
+            id="adminPasswordInput" 
+            placeholder="Introduce tu clave secreta" 
+            required
+            class="w-full px-4 py-3 bg-[#0A0517] border border-purple-800 rounded-xl text-white text-sm focus:outline-none focus:border-purple-400"
+          />
+          <p class="text-[11px] text-purple-400/60 mt-1.5 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            Acceso restringido únicamente para personal autorizado.
+          </p>
+        </div>
+
+        <div id="adminLoginError" class="hidden text-xs text-red-300 font-semibold bg-red-950/80 p-2.5 rounded-lg border border-red-500/60">
+          Contraseña incorrecta. Inténtalo nuevamente.
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeAdminModal()" class="w-1/2 py-2.5 rounded-xl border border-purple-800 text-purple-300 font-semibold text-sm hover:bg-purple-950/60">
+            Cancelar
+          </button>
+          <button type="submit" class="w-1/2 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm shadow-md">
+            Ingresar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 2. Admin Dashboard Screen (Manage & Add Suppliers) -->
+    <div id="adminDashboardScreen" class="bg-[#100A22] rounded-2xl w-full max-w-4xl p-4 sm:p-6 shadow-2xl border border-purple-700/50 hidden max-h-[92vh] flex flex-col">
+      <!-- Dashboard Top Header -->
+      <div class="flex items-center justify-between pb-4 border-b border-purple-900/60 flex-shrink-0">
+        <div>
+          <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Panel de Control</span>
+          <h2 class="text-xl font-black text-white font-display">Gestión de Proveedores Streaming</h2>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="syncIndicator" class="text-xs text-purple-300 flex items-center gap-1.5 font-medium">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            En línea
+          </span>
+          <button onclick="closeAdminModal()" class="text-purple-400 hover:text-white p-1.5 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dashboard Scrollable Body -->
+      <div class="overflow-y-auto custom-scroll flex-grow pr-1 space-y-6 mt-4">
+        
+        <!-- Form to Add Supplier -->
+        <div class="bg-[#150E2D] border border-purple-800/60 rounded-xl p-4 sm:p-5">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-purple-200 mb-3 flex items-center gap-2 font-display">
+            <span class="w-6 h-6 rounded-md bg-purple-600 text-white flex items-center justify-center text-xs font-black">+</span>
+            Agregar Proveedor a la Base de Datos
+          </h3>
+          <form id="addSupplierForm" onsubmit="handleAddSupplier(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <!-- Company Name -->
+            <div>
+              <label class="block text-xs font-bold text-purple-300 mb-1">Nombre de la Empresa *</label>
+              <input 
+                type="text" 
+                id="formCompanyName" 
+                placeholder="Ej: Star Play Premium Oficial" 
+                required 
+                class="w-full px-3 py-2 bg-[#090516] border border-purple-800 rounded-lg text-sm text-white focus:outline-none focus:border-purple-400"
+              />
+            </div>
+
+            <!-- WhatsApp Number -->
+            <div>
+              <label class="block text-xs font-bold text-purple-300 mb-1">Número de WhatsApp *</label>
+              <input 
+                type="text" 
+                id="formWhatsApp" 
+                placeholder="Ej: +51 987 654 321" 
+                required 
+                class="w-full px-3 py-2 bg-[#090516] border border-purple-800 rounded-lg text-sm text-white focus:outline-none focus:border-purple-400 font-mono"
+              />
+            </div>
+
+            <!-- Logo URL -->
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="text-xs font-bold text-purple-300">URL del Logo (Opcional)</label>
+                <button type="button" onclick="setPresetLogo()" class="text-[11px] text-amber-300 font-semibold hover:underline">Logo streaming demo</button>
+              </div>
+              <input 
+                type="url" 
+                id="formLogoUrl" 
+                placeholder="https://ejemplo.com/logo.png" 
+                class="w-full px-3 py-2 bg-[#090516] border border-purple-800 rounded-lg text-sm text-white focus:outline-none focus:border-purple-400"
+              />
+            </div>
+
+            <!-- Verification Status Select -->
+            <div>
+              <label class="block text-xs font-bold text-purple-300 mb-1">Estado de Verificación *</label>
+              <select 
+                id="formStatus" 
+                class="w-full px-3 py-2 bg-[#090516] border border-purple-800 rounded-lg text-sm text-white focus:outline-none focus:border-purple-400 font-medium"
+              >
+                <option value="Proveedor Verificado" selected>🟢 Proveedor Verificado (Verde Estándar)</option>
+                <option value="Proveedor Verificado Premium">👑 Proveedor Verificado Premium (Dorado Llamativo)</option>
+                <option value="En Revisión">⏳ En Revisión</option>
+                <option value="Proveedor Suspendido">🚫 Proveedor Suspendido</option>
+              </select>
+            </div>
+
+            <!-- Join Date Input -->
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="text-xs font-bold text-purple-300">Fecha de Ingreso / Registro *</label>
+                <button type="button" onclick="setTodayJoinDate()" class="text-[11px] text-purple-300 font-semibold hover:underline">Hoy</button>
+              </div>
+              <input 
+                type="date" 
+                id="formJoinDate" 
+                required 
+                class="w-full px-3 py-2 bg-[#090516] border border-purple-800 rounded-lg text-sm text-white focus:outline-none focus:border-purple-400 font-sans"
+              />
+            </div>
+
+            <!-- Notes -->
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-bold text-purple-300 mb-1">Notas / Servicios (Netflix, Max, Disney+, etc.)</label>
+              <input 
+                type="text" 
+                id="formNotes" 
+                placeholder="Ej: Distribuidor de pantallas completas UHD, garantía 30 días y soporte inmediato." 
+                class="w-full px-3 py-2 bg-[#090516] border border-purple-800 rounded-lg text-sm text-white focus:outline-none focus:border-purple-400"
+              />
+            </div>
+
+            <div class="sm:col-span-2 flex justify-end">
+              <button 
+                type="submit" 
+                id="btnSaveSupplier"
+                class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold px-6 py-2.5 rounded-lg text-sm transition-all shadow-lg flex items-center gap-2"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span>Guardar en Base de Datos</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Supplier Database List Table -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-purple-200 font-display">
+              Proveedores Registrados (<span id="suppliersCount" class="text-amber-400">0</span>)
+            </h3>
+            <span class="text-xs text-purple-400/80">Sincronización en tiempo real</span>
+          </div>
+
+          <div class="border border-purple-900/60 rounded-xl overflow-hidden shadow-sm bg-[#0C071C]">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs text-purple-200">
+                <thead class="bg-[#160E2E] text-purple-300 uppercase font-bold text-[11px] border-b border-purple-900/60">
+                  <tr>
+                    <th class="p-3">Logo</th>
+                    <th class="p-3">Empresa</th>
+                    <th class="p-3">WhatsApp</th>
+                    <th class="p-3">Ingreso</th>
+                    <th class="p-3">Estado</th>
+                    <th class="p-3 text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="suppliersTableBody" class="divide-y divide-purple-900/40">
+                  <tr>
+                    <td colspan="6" class="p-6 text-center text-purple-400">Cargando base de datos...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dashboard Footer -->
+      <div class="pt-4 border-t border-purple-900/60 flex justify-between items-center flex-shrink-0 text-xs text-purple-400">
+        <span>Sesión administrativa activa</span>
+        <button onclick="logoutAdmin()" class="text-red-400 font-semibold hover:underline">
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Element -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 max-w-sm bg-[#120B24] border border-purple-700/80 text-white px-4 py-3 rounded-xl shadow-2xl z-50 flex items-center gap-3 transition-all duration-300 opacity-0 pointer-events-none translate-y-3">
+    <div id="toastIcon" class="text-emerald-400">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+    </div>
+    <div id="toastMessage" class="text-xs font-semibold">Operación completada</div>
+  </div>
+
+  <!-- Custom Confirmation Dialog (Never browser confirm) -->
+  <div id="customConfirmModal" class="fixed inset-0 bg-[#06030E]/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-[#120B24] rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-red-500/50 text-center">
+      <div class="w-12 h-12 rounded-full bg-red-950 text-red-400 flex items-center justify-center mx-auto mb-3 border border-red-500/40">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+      </div>
+      <h3 class="text-base font-black text-white font-display">¿Eliminar Proveedor?</h3>
+      <p id="confirmModalText" class="text-xs text-purple-300/80 mt-1 mb-5">
+        Esta acción quitará el proveedor del portal público.
+      </p>
+      <div class="flex gap-2">
+        <button id="confirmCancelBtn" class="w-1/2 py-2.5 rounded-xl border border-purple-800 text-purple-300 text-xs font-bold hover:bg-purple-950">
+          Cancelar
+        </button>
+        <button id="confirmOkBtn" class="w-1/2 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-md">
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full bg-[#080414] text-purple-400/80 py-6 border-t border-purple-900/40 mt-12">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between text-xs gap-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+        <span class="text-white font-semibold">Proveedores Verificados</span> - Plataforma de Prevención contra Fraudes en Streaming
+      </div>
+      <p class="text-purple-400/60">Garantía y validación continua para distribuidores y clientes.</p>
+    </div>
+  </footer>
+
+  <!-- Application Logic & Firebase Integration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { 
+      getAuth, 
+      signInAnonymously 
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { 
+      getFirestore, 
+      collection, 
+      doc, 
+      setDoc, 
+      deleteDoc, 
+      onSnapshot 
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Configuración estándar de Firebase Web
+    const firebaseConfig = {
+      apiKey: "AIzaSyBVevYaXUzrNG-0CnmZFU4kB_G0Np0xYqY",
+      authDomain: "proveedores-verificados.firebaseapp.com",
+      projectId: "proveedores-verificados",
+      storageBucket: "proveedores-verificados.firebasestorage.app",
+      messagingSenderId: "742494958195",
+      appId: "1:742494958195:web:0a8a8f99bb02433c20f006",
+      measurementId: "G-MQR23TMW4L"
+    };
+
+    // Inicialización estándar
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Estado local de la aplicación
+    let suppliersList = [];
+
+    // Contraseña de administrador
+    const ADMIN_PASSWORD = "Loar7";
+
+    // Proveedores base en caso de conexión inicial
+    const INITIAL_LOCAL_SUPPLIERS = [
+      {
+        id: "stream-supplier-1",
+        companyName: "Nexus Streaming Premium Oficial",
+        whatsapp: "+51 987 654 321",
+        cleanPhone: "51987654321",
+        logoUrl: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=200&auto=format&fit=crop&q=60",
+        status: "Proveedor Verificado Premium",
+        joinDate: "2024-01-15",
+        notes: "⭐ Distribuidor Mayorista Autorizado: Netflix UHD, Max, Disney+ y Spotify. Garantía 100%."
+      },
+      {
+        id: "stream-supplier-2",
+        companyName: "Master Play Digital SAC",
+        whatsapp: "+51 912 345 678",
+        cleanPhone: "51912345678",
+        logoUrl: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=200&auto=format&fit=crop&q=60",
+        status: "Proveedor Verificado",
+        joinDate: "2024-04-10",
+        notes: "Cuentas completas y pantallas individuales con soporte técnico los 7 días de la semana."
+      },
+      {
+        id: "stream-supplier-3",
+        companyName: "Cinema Prime Global",
+        whatsapp: "+52 55 1234 5678",
+        cleanPhone: "525512345678",
+        logoUrl: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=200&auto=format&fit=crop&q=60",
+        status: "Proveedor Verificado Premium",
+        joinDate: "2023-11-20",
+        notes: "⭐ Proveedor Internacional Certificado para México, Colombia, Perú y Chile."
+      }
+    ];
+
+    // Helper: Normalizar números telefónicos quitando símbolos
+    function normalizePhone(numStr) {
+      if (!numStr) return "";
+      return String(numStr).replace(/[^0-9]/g, "");
+    }
+
+    // Helper: Formato de fecha YYYY-MM-DD a DD/MM/YYYY
+    function formatDisplayDate(dateStr) {
+      if (!dateStr) return "Fecha no registrada";
+      const parts = dateStr.split("-");
+      if (parts.length === 3) {
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+      }
+      return dateStr;
+    }
+
+    // Helper: Obtener fecha actual en formato YYYY-MM-DD
+    function getTodayYMD() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    window.setTodayJoinDate = function() {
+      const input = document.getElementById("formJoinDate");
+      if (input) input.value = getTodayYMD();
+    };
+
+    async function initFirebaseStorage() {
+      try {
+        // Autenticación anónima para permitir operaciones con reglas de Firestore
+        try {
+          await signInAnonymously(auth);
+        } catch (authErr) {
+          console.warn("Autenticación anónima:", authErr.message);
+        }
+
+        // Conexión directa a la colección raíz 'proveedores' en Firestore
+        const proveedoresCol = collection(db, 'proveedores');
+
+        // Escucha en tiempo real de cambios en la colección
+        onSnapshot(proveedoresCol, (snapshot) => {
+          if (snapshot.empty) {
+            suppliersList = [...INITIAL_LOCAL_SUPPLIERS];
+            INITIAL_LOCAL_SUPPLIERS.forEach(s => {
+              setDoc(doc(db, 'proveedores', s.id), s).catch((err) => {
+                console.warn("No se pudo precargar registro inicial:", err);
+              });
+            });
+          } else {
+            suppliersList = [];
+            snapshot.forEach((docSnap) => {
+              suppliersList.push({ id: docSnap.id, ...docSnap.data() });
+            });
+          }
+          renderSuppliersTable();
+          updateSyncStatus(true);
+        }, (err) => {
+          console.warn("Firestore error en colección 'proveedores', usando memoria local:", err);
+          suppliersList = [...INITIAL_LOCAL_SUPPLIERS];
+          renderSuppliersTable();
+          updateSyncStatus(false);
+        });
+
+      } catch (e) {
+        console.warn("Error al inicializar Firebase:", e);
+        suppliersList = [...INITIAL_LOCAL_SUPPLIERS];
+        renderSuppliersTable();
+        updateSyncStatus(false);
+      }
+    }
+
+    function updateSyncStatus(connected) {
+      const syncEl = document.getElementById("syncIndicator");
+      if (syncEl) {
+        if (connected) {
+          syncEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Servidor Conectado`;
+        } else {
+          syncEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-purple-400"></span> Modo Memoria Streaming`;
+        }
+      }
+    }
+
+    // Lógica para verificar el número de WhatsApp
+    window.handleVerify = function(event) {
+      if (event) event.preventDefault();
+      
+      const input = document.getElementById("whatsappInput");
+      const rawQuery = input.value.trim();
+      const cleanQuery = normalizePhone(rawQuery);
+
+      if (!cleanQuery || cleanQuery.length < 5) {
+        showToast("Por favor ingresa un número de WhatsApp válido.", "warning");
+        return;
+      }
+
+      const matched = suppliersList.find(s => {
+        const itemClean = s.cleanPhone || normalizePhone(s.whatsapp);
+        return itemClean === cleanQuery || 
+               itemClean.endsWith(cleanQuery) || 
+               cleanQuery.endsWith(itemClean);
+      });
+
+      const initialCard = document.getElementById("initialGuideCard");
+      const verifiedCard = document.getElementById("verifiedCard");
+      const notFoundCard = document.getElementById("notFoundCard");
+
+      initialCard.classList.add("hidden");
+
+      if (matched) {
+        notFoundCard.classList.add("hidden");
+        verifiedCard.classList.remove("hidden");
+
+        const statusRaw = (matched.status || "Proveedor Verificado").trim();
+        const isPremium = statusRaw.toLowerCase().includes("premium");
+        const isSuspended = statusRaw.toLowerCase().includes("suspendido");
+
+        const compNameEl = document.getElementById("resultCompanyName");
+        const phoneEl = document.getElementById("resultPhone");
+        const logoImg = document.getElementById("resultLogo");
+        const topBar = document.getElementById("resultTopBar");
+        const badge = document.getElementById("resultStatusBadge");
+        const badgeIcon = document.getElementById("resultStatusIcon");
+        const logoContainer = document.getElementById("resultLogoContainer");
+        const checkBadge = document.getElementById("resultCheckBadge");
+        const statusTextSpan = document.getElementById("resultStatusText");
+        const subBadge = document.getElementById("resultSubBadge");
+        const directBtn = document.getElementById("resultWhatsAppDirect");
+        const securityBadge = document.getElementById("resultSecurityBadge");
+        const notesBox = document.getElementById("resultNotesBox");
+        const joinDateEl = document.getElementById("resultJoinDate");
+        const joinDateBadge = document.getElementById("resultJoinDateBadge");
+
+        compNameEl.textContent = matched.companyName || "Empresa Verificada";
+        phoneEl.textContent = matched.whatsapp || rawQuery;
+        
+        logoImg.src = matched.logoUrl || `https://placehold.co/200x200/181033/ffffff?text=${encodeURIComponent(matched.companyName ? matched.companyName.substring(0, 3).toUpperCase() : 'STR')}`;
+
+        const formattedDate = formatDisplayDate(matched.joinDate);
+        joinDateEl.textContent = formattedDate;
+
+        if (isPremium) {
+          verifiedCard.className = "w-full bg-gradient-to-b from-[#1C1405] via-[#100922] to-[#150D02] border-2 border-amber-400 rounded-2xl p-6 sm:p-8 shadow-2xl gold-glow relative overflow-hidden transition-all duration-300";
+          topBar.className = "absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-amber-500 via-yellow-200 to-amber-500 animate-pulse";
+          badge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase bg-amber-950/90 text-amber-300 border-2 border-amber-400 shadow-lg shadow-amber-500/20";
+          statusTextSpan.textContent = "PROVEEDOR VERIFICADO PREMIUM";
+          badgeIcon.innerHTML = `<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>`;
+          badgeIcon.className = "w-4 h-4 fill-amber-300 animate-bounce";
+          compNameEl.className = "text-2xl sm:text-4xl font-black shimmer-gold drop-shadow-md leading-tight tracking-wide font-display mt-0.5";
+          phoneEl.className = "text-lg sm:text-xl font-bold tracking-wider flex items-center justify-center md:justify-start gap-2 font-mono text-amber-300 mt-0.5";
+          logoContainer.className = "w-24 h-24 sm:w-28 sm:h-28 rounded-2xl p-1 bg-[#150F28] border-2 border-amber-400 shadow-xl shadow-amber-400/20 flex items-center justify-center overflow-hidden";
+          checkBadge.className = "absolute -bottom-2 -right-2 bg-gradient-to-tr from-amber-500 to-yellow-300 text-slate-950 p-1.5 rounded-full shadow-lg border-2 border-[#120B24]";
+          checkBadge.innerHTML = `<svg class="w-4 h-4 fill-slate-950" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
+          subBadge.textContent = "⭐ Certificación Dorada de Confianza Streaming";
+          subBadge.className = "text-xs text-amber-300 font-extrabold";
+          directBtn.className = "w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-black px-7 py-3.5 rounded-xl shadow-xl shadow-amber-500/25 transition-all text-sm uppercase tracking-wider";
+          securityBadge.className = "text-xs text-amber-300 bg-amber-950/80 px-3.5 py-2.5 rounded-xl border border-amber-500/50 font-bold flex items-center gap-1.5";
+          securityBadge.innerHTML = `👑 Distribuidor Mayorista Premium Certificado`;
+          notesBox.className = "text-xs p-3 rounded-xl border border-amber-500/40 bg-amber-950/30 text-amber-200/90";
+          joinDateBadge.className = "inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border border-amber-500/40 bg-amber-950/40 text-amber-300";
+
+          showToast("¡Proveedor Verificado PREMIUM encontrado! ⭐", "warning");
+
+        } else if (isSuspended) {
+          verifiedCard.className = "w-full bg-[#180A14] border-2 border-red-500 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden transition-all duration-300";
+          topBar.className = "absolute top-0 left-0 right-0 h-2 bg-red-600";
+          badge.className = "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase bg-red-950 text-red-300 border border-red-500";
+          statusTextSpan.textContent = "PROVEEDOR SUSPENDIDO";
+          badgeIcon.innerHTML = `<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>`;
+          compNameEl.className = "text-2xl sm:text-3xl font-black text-red-300 leading-tight font-display mt-0.5";
+          phoneEl.className = "text-lg font-mono text-red-400 mt-0.5";
+          subBadge.textContent = "Cuenta Inactiva / Reportada";
+          subBadge.className = "text-xs text-red-400 font-bold";
+          notesBox.className = "text-xs p-3 rounded-xl border border-red-800 bg-red-950 text-red-300";
+          joinDateBadge.className = "inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border border-red-800 bg-red-950/60 text-red-300";
+          showToast("Atención: Proveedor suspendido", "warning");
+
+        } else {
+          verifiedCard.className = "w-full bg-gradient-to-b from-[#081813] via-[#0B1522] to-[#0A111E] border-2 border-emerald-500 rounded-2xl p-6 sm:p-8 shadow-2xl emerald-glow relative overflow-hidden transition-all duration-300";
+          topBar.className = "absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500";
+          badge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase bg-emerald-950/90 text-emerald-300 border-2 border-emerald-500/70 shadow-lg shadow-emerald-500/20";
+          statusTextSpan.textContent = "PROVEEDOR VERIFICADO";
+          badgeIcon.innerHTML = `<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>`;
+          badgeIcon.className = "w-4 h-4 fill-emerald-400";
+          compNameEl.className = "text-2xl sm:text-4xl font-black text-white leading-tight tracking-wide font-display mt-0.5";
+          phoneEl.className = "text-lg sm:text-xl font-bold tracking-wider flex items-center justify-center md:justify-start gap-2 font-mono text-emerald-400 mt-0.5";
+          logoContainer.className = "w-24 h-24 sm:w-28 sm:h-28 rounded-2xl p-1 bg-[#09151A] border-2 border-emerald-400 shadow-lg shadow-emerald-500/20 flex items-center justify-center overflow-hidden";
+          checkBadge.className = "absolute -bottom-2 -right-2 bg-emerald-500 text-white p-1.5 rounded-full shadow-md border-2 border-[#0B1522]";
+          checkBadge.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>`;
+          subBadge.textContent = "Registro Oficial Activo";
+          subBadge.className = "text-xs text-emerald-400/90 font-bold";
+          directBtn.className = "w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-black px-7 py-3.5 rounded-xl shadow-xl shadow-emerald-600/20 transition-all text-sm uppercase tracking-wider";
+          securityBadge.className = "text-xs text-emerald-400 bg-emerald-950/80 px-3.5 py-2.5 rounded-xl border border-emerald-500/40 font-bold flex items-center gap-1.5";
+          securityBadge.innerHTML = `🔒 Contacto Autorizado y Verificado`;
+          notesBox.className = "text-xs p-3 rounded-xl border border-emerald-800/60 bg-emerald-950/30 text-emerald-200/90";
+          joinDateBadge.className = "inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border border-emerald-500/40 bg-emerald-950/40 text-emerald-300";
+
+          showToast("¡Proveedor Verificado encontrado con éxito! 🟢", "success");
+        }
+
+        const notesWrapper = document.getElementById("resultNotesWrapper");
+        const notesEl = document.getElementById("resultNotes");
+        if (matched.notes && matched.notes.trim() !== "") {
+          notesEl.textContent = matched.notes;
+          notesWrapper.classList.remove("hidden");
+        } else {
+          notesWrapper.classList.add("hidden");
+        }
+
+        const waLink = document.getElementById("resultWhatsAppDirect");
+        const waClean = matched.cleanPhone || normalizePhone(matched.whatsapp);
+        waLink.href = `https://wa.me/${waClean}?text=${encodeURIComponent('Hola, me comunico tras verificar su número en el portal de Proveedores Verificados de Streaming.')}`;
+
+      } else {
+        verifiedCard.classList.add("hidden");
+        notFoundCard.classList.remove("hidden");
+        document.getElementById("searchedQueryNum").textContent = rawQuery;
+        showToast("Número no encontrado en la base de datos.", "warning");
+      }
+
+      document.getElementById("resultsWrapper").scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    window.resetSearch = function() {
+      document.getElementById("whatsappInput").value = "";
+      document.getElementById("verifiedCard").classList.add("hidden");
+      document.getElementById("notFoundCard").classList.add("hidden");
+      document.getElementById("initialGuideCard").classList.remove("hidden");
+    };
+
+    window.loadSampleNormalQuery = function() {
+      const normalSupplier = suppliersList.find(s => !((s.status || '').toLowerCase().includes('premium')));
+      const sample = normalSupplier ? normalSupplier.whatsapp : "+51 912 345 678";
+      document.getElementById("whatsappInput").value = sample;
+      window.handleVerify();
+    };
+
+    window.loadSamplePremiumQuery = function() {
+      const premiumSupplier = suppliersList.find(s => (s.status || '').toLowerCase().includes('premium'));
+      const sample = premiumSupplier ? premiumSupplier.whatsapp : "+51 987 654 321";
+      document.getElementById("whatsappInput").value = sample;
+      window.handleVerify();
+    };
+
+    window.openAdminModal = function() {
+      document.getElementById("adminModal").classList.remove("hidden");
+      const passScreen = document.getElementById("adminPasswordScreen");
+      const dashScreen = document.getElementById("adminDashboardScreen");
+      
+      const joinDateInput = document.getElementById("formJoinDate");
+      if (joinDateInput && !joinDateInput.value) {
+        joinDateInput.value = getTodayYMD();
+      }
+
+      if (sessionStorage.getItem("admin_authenticated") === "true") {
+        passScreen.classList.add("hidden");
+        dashScreen.classList.remove("hidden");
+        renderSuppliersTable();
+      } else {
+        passScreen.classList.remove("hidden");
+        dashScreen.classList.add("hidden");
+        document.getElementById("adminPasswordInput").value = "";
+        document.getElementById("adminLoginError").classList.add("hidden");
+      }
+    };
+
+    window.closeAdminModal = function() {
+      document.getElementById("adminModal").classList.add("hidden");
+    };
+
+    window.handleAdminLogin = function(event) {
+      event.preventDefault();
+      const inputPass = document.getElementById("adminPasswordInput").value;
+      const errorDiv = document.getElementById("adminLoginError");
+
+      if (inputPass === ADMIN_PASSWORD) {
+        sessionStorage.setItem("admin_authenticated", "true");
+        errorDiv.classList.add("hidden");
+        document.getElementById("adminPasswordScreen").classList.add("hidden");
+        document.getElementById("adminDashboardScreen").classList.remove("hidden");
+        renderSuppliersTable();
+        showToast("Bienvenido al panel administrativo", "success");
+      } else {
+        errorDiv.classList.remove("hidden");
+      }
+    };
+
+    window.logoutAdmin = function() {
+      sessionStorage.removeItem("admin_authenticated");
+      document.getElementById("adminDashboardScreen").classList.add("hidden");
+      document.getElementById("adminPasswordScreen").classList.remove("hidden");
+      document.getElementById("adminPasswordInput").value = "";
+      showToast("Sesión cerrada", "info");
+    };
+
+    window.setPresetLogo = function() {
+      const demoLogos = [
+        "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=200&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=200&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=200&auto=format&fit=crop&q=60"
+      ];
+      const randomLogo = demoLogos[Math.floor(Math.random() * demoLogos.length)];
+      document.getElementById("formLogoUrl").value = randomLogo;
+    };
+
+    // Guardar nuevo proveedor en la colección 'proveedores'
+    window.handleAddSupplier = async function(event) {
+      event.preventDefault();
+      
+      const companyName = document.getElementById("formCompanyName").value.trim();
+      const whatsapp = document.getElementById("formWhatsApp").value.trim();
+      const logoUrl = document.getElementById("formLogoUrl").value.trim();
+      const status = document.getElementById("formStatus").value;
+      const joinDate = document.getElementById("formJoinDate").value || getTodayYMD();
+      const notes = document.getElementById("formNotes").value.trim();
+
+      const cleanPhone = normalizePhone(whatsapp);
+
+      if (!companyName || !whatsapp) {
+        showToast("Nombre de empresa y WhatsApp son obligatorios", "warning");
+        return;
+      }
+
+      if (cleanPhone.length < 6) {
+        showToast("Ingresa un número de WhatsApp válido", "warning");
+        return;
+      }
+
+      const saveBtn = document.getElementById("btnSaveSupplier");
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Guardando...";
+
+      const newSupplier = {
+        id: "stream-sup-" + Date.now(),
+        companyName,
+        whatsapp,
+        cleanPhone,
+        logoUrl: logoUrl || `https://placehold.co/200x200/181033/ffffff?text=${encodeURIComponent(companyName.substring(0, 3).toUpperCase())}`,
+        status,
+        joinDate,
+        notes,
+        createdAt: new Date().toISOString()
+      };
+
+      try {
+        // Guardado directo en Firestore: coleccion 'proveedores'
+        await setDoc(doc(db, 'proveedores', newSupplier.id), newSupplier);
+
+        showToast("Proveedor guardado con éxito en Firestore", "success");
+        document.getElementById("addSupplierForm").reset();
+        document.getElementById("formJoinDate").value = getTodayYMD();
+      } catch (err) {
+        console.error("Error guardando proveedor en Firestore:", err);
+        suppliersList.unshift(newSupplier);
+        renderSuppliersTable();
+        showToast("Guardado en la sesión local (Revisa tus reglas de Firestore)", "warning");
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          <span>Guardar en Base de Datos</span>
+        `;
+      }
+    };
+
+    window.confirmDeleteSupplier = function(id, name) {
+      const confirmModal = document.getElementById("customConfirmModal");
+      const confirmText = document.getElementById("confirmModalText");
+      const okBtn = document.getElementById("confirmOkBtn");
+      const cancelBtn = document.getElementById("confirmCancelBtn");
+
+      confirmText.textContent = `¿Eliminar a "${name}" de la base de datos de proveedores?`;
+      confirmModal.classList.remove("hidden");
+
+      const cleanup = () => {
+        confirmModal.classList.add("hidden");
+        okBtn.onclick = null;
+        cancelBtn.onclick = null;
+      };
+
+      cancelBtn.onclick = cleanup;
+      okBtn.onclick = async () => {
+        cleanup();
+        await executeDeleteSupplier(id);
+      };
+    };
+
+    async function executeDeleteSupplier(id) {
+      try {
+        // Borrado directo en Firestore: coleccion 'proveedores'
+        await deleteDoc(doc(db, 'proveedores', id));
+        showToast("Proveedor eliminado", "info");
+      } catch (err) {
+        console.error("Error eliminando en Firestore:", err);
+        suppliersList = suppliersList.filter(s => s.id !== id);
+        renderSuppliersTable();
+        showToast("Eliminado del registro local", "info");
+      }
+    }
+
+    function renderSuppliersTable() {
+      const tbody = document.getElementById("suppliersTableBody");
+      const countEl = document.getElementById("suppliersCount");
+      if (!tbody) return;
+
+      countEl.textContent = suppliersList.length;
+
+      if (suppliersList.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="p-8 text-center text-purple-400">
+              No hay proveedores registrados aún. Agrega uno con el formulario de arriba.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = suppliersList.map(s => {
+        const isPrem = (s.status || '').toLowerCase().includes("premium");
+        const isVerif = (s.status || '').toLowerCase().includes("verificado") && !isPrem;
+        
+        let badgeStyle = "bg-purple-950 text-purple-300 border-purple-800";
+        if (isPrem) {
+          badgeStyle = "bg-amber-950/90 text-amber-300 border-amber-500 font-black";
+        } else if (isVerif) {
+          badgeStyle = "bg-emerald-950/90 text-emerald-300 border-emerald-500/70 font-bold";
+        }
+        
+        const formattedDate = formatDisplayDate(s.joinDate);
+
+        return `
+          <tr class="hover:bg-purple-950/40 transition-colors">
+            <td class="p-3">
+              <div class="w-9 h-9 rounded-lg border border-purple-800 overflow-hidden bg-[#0A0517] flex items-center justify-center">
+                <img 
+                  src="${s.logoUrl || 'https://placehold.co/100x100?text=Logo'}" 
+                  alt="${s.companyName}" 
+                  class="w-full h-full object-contain"
+                  onerror="this.src='https://placehold.co/100x100?text=Logo'"
+                />
+              </div>
+            </td>
+            <td class="p-3">
+              <span class="font-bold ${isPrem ? 'text-amber-300 font-extrabold' : 'text-white'} block">${escapeHtml(s.companyName)}</span>
+              ${s.notes ? `<span class="text-[10px] text-purple-300/70 truncate block max-w-xs">${escapeHtml(s.notes)}</span>` : ''}
+            </td>
+            <td class="p-3 font-mono font-medium ${isPrem ? 'text-amber-400' : 'text-emerald-400'}">
+              ${escapeHtml(s.whatsapp)}
+            </td>
+            <td class="p-3 font-mono text-[11px] text-purple-300 whitespace-nowrap">
+              📅 ${escapeHtml(formattedDate)}
+            </td>
+            <td class="p-3">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] uppercase border ${badgeStyle}">
+                ${isPrem ? '👑 ' : (isVerif ? '🟢 ' : '')}${escapeHtml(s.status || 'Verificado')}
+              </span>
+            </td>
+            <td class="p-3 text-right">
+              <button 
+                onclick="confirmDeleteSupplier('${s.id}', '${escapeHtml(s.companyName)}')" 
+                class="text-red-400 hover:text-red-300 p-1.5 hover:bg-red-950/80 rounded-lg transition-colors"
+                title="Eliminar Proveedor"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function showToast(message, type = "success") {
+      const toast = document.getElementById("toastNotification");
+      const msg = document.getElementById("toastMessage");
+      const icon = document.getElementById("toastIcon");
+
+      msg.textContent = message;
+
+      if (type === "warning") {
+        icon.innerHTML = `<svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
+      } else if (type === "info") {
+        icon.innerHTML = `<svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+      } else {
+        icon.innerHTML = `<svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
+      }
+
+      toast.classList.remove("opacity-0", "translate-y-3", "pointer-events-none");
+      toast.classList.add("opacity-100", "translate-y-0");
+
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "translate-y-3", "pointer-events-none");
+        toast.classList.remove("opacity-100", "translate-y-0");
+      }, 3500);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    window.showToast = showToast;
+
+    window.addEventListener("DOMContentLoaded", () => {
+      initFirebaseStorage();
+    });
+  </script>
+</body>
+</html>
